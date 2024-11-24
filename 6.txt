@@ -1,0 +1,82 @@
+Create the table oldrecords
+
+CREATE TABLE oldrecords ( roll_no NUMBER(10), name VARCHAR2(30) );
+
+--Create the table newrecords
+
+CREATE TABLE newrecords ( roll_no NUMBER(10), name VARCHAR2(30) );
+
+--Insert 5 random elements into the oldrecords table
+
+INSERT INTO oldrecords (roll_no, name) VALUES (101, 'Aditee Mohanty'); INSERT INTO oldrecords (roll_no, name) VALUES (102, 'Prachee Prasad');
+
+INSERT INTO oldrecords (roll_no, name) VALUES (103, 'Samiksha Shetty'); INSERT INTO oldrecords (roll_no, name) VALUES (104, 'Sakshi Lokhande');
+
+INSERT INTO oldrecords (roll_no, name) VALUES (105, 'Rujuta Bhanose');
+
+--Insert 5 elements into the newrecords table, with 3 matching the oldrecords table
+
+INSERT INTO newrecords (roll_no, name) VALUES (101, 'Aditee Mohanty');
+
+INSERT INTO newrecords (roll_no, name) VALUES (102, 'Prachee Prasad'); INSERT INTO newrecords (roll_no, name) VALUES (106, 'Samiksha Shetty');
+
+INSERT INTO newrecords (roll_no, name) VALUES (104, 'Soham Ghodake');
+
+INSERT INTO newrecords (roll_no, name) VALUES (107, 'Shashwati Kale');
+
+--Verify the data inserted in newrecords
+
+SELECT FROM newrecords;
+
+--Verify the data inserted in oldrecords
+
+SELECT FROM oldrecords;
+
+DECLARE
+
+Declare variables to hold the data fetched from the cursor
+
+v_roll_no oldrecords.roll_no%TYPE;
+
+v_name oldrecords.name%TYPE;
+
+Declare a cursor to select records from oldrecords that are not in newrecords
+
+CURSOR c1 IS
+SELECT roll_no, name FROM oldrecords
+
+WHERE roll_no NOT IN (SELECT roll_no FROM newrecords);
+
+BEGIN
+
+Open the cursor OPEN C1;
+
+Loop through the records fetched by the cursor
+
+LOOP
+
+FETCH c1 INTO v_roll_no, v_name;
+
+Exit the loop when there are no more records to fetch EXIT WHEN C1% NOT FOUND;
+
+Insert the fetched record into the newrecords table INSERT INTO newrecords (roll_no, name) VALUES (v_roll_no, v_name);
+
+Output the inserted record for verification
+
+DBMS_OUTPUT.PUT_LINE(‘Inserted Roll No: || v_roll_no ||, Name: || v_name);
+
+END LOOP:
+
+DBMS_OUTPUT.PUT_LINE(‘Inserted Roll No: || v_roll_no || ‘, Name: || v_name); END LOOP;
+
+Close the cursor
+
+CLOSE C1;
+
+END;
+
+--Verify the final data in newrecords after cursor operation
+
+SELECT FROM newrecords;
+
+--END OF PROGRAM

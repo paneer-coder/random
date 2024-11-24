@@ -1,0 +1,143 @@
+Assign 5: 
+Create Borrower table
+
+CREATE TABLE Borrower (
+
+Rollin INT,
+
+Name VARCHAR(100), Dateof Issue DATE, NameofBook VARCHAR(100), PRIMARY KEY (Rollin, NameofBook)
+
+
+Status CHAR(1), 'I' for Issued, 'R' for Returned
+
+Create Fine table
+
+CREATE TABLE Fine ( Roll_no INT, Date DATE,
+
+Amt DECIMAL (10, 2),
+
+PRIMARY KEY (Roll_no, Date)
+
+Insert records into Borrower table
+
+INSERT INTO Borrower (Rollin, Name, DateofIssue, NameofBook, Status) VALUES
+
+(1, 'Aditee', '2024-07-29', 'Wings of fire', 'I'),
+
+(2, 'Shyam', '2024-07-10', 'Pride and Prejudice', 'I'),
+
+(3, Jasim', '2024-07-15', 'The lord of Rings', 'r'),
+
+(4, Arya', 2024-07-20', '1984', '1'),
+
+(5, Rajal', '2024-07-25', 'Lolita', 'I'),
+
+(6, Prachee', '2024-08-4', 'A suitable boy', 'I'),
+
+(7, 'Harsh', '2024-08-10", "war and peace", "I'),
+
+(8, 'Shlok', '2024-08-28', 'The merchant of Venice', 'I');
+
+Update records in Borrower table
+
+Update Borrower
+SET DateofIssue 2024-07-29', Status = 'I' WHERE Rollin = 1 AND NameofBook 'Wings of Fire';
+
+UPDATE Borrower
+
+SET DateofIssue 2024-07-10, Status = 'I' WHERE Rollin 2 AND NameofBook 'Pride and Prejudice';
+
+UPDATE Borrower
+
+SET DateofIssue 2024-07-15', Status = 'I' WHERE Rollin = 3 AND NameofBook 'The lord of Rings';
+
+UPDATE Borrower
+
+SET DateofIssue 2024-07-20, Status - WHERE Rollin 4 AND NameofBook = 1984; I
+
+UPDATE Borrower
+
+SET DateofIssue 2024-07-25, Status = 'I' WHERE Rollin 5 AND NameofBook Lolita';
+
+UPDATE Borrower
+
+SET DateofIssue WHERE Rollin 2024-08-04, Status = 'I' 6 AND NameofBook A suitable boy';
+
+UPDATE Borrower
+SET Dateof Issue 2024-88-10', Status = 'I'
+WHERE Rollin 7 AND NameofBook war and peace’;
+
+UPDATE Borrower
+
+SET DateofIssue ‘2024-08-20’, Status = ‘I’
+
+WHERE Rollin 8 AND Nameof Book ‘The merchant of Venice’;
+
+DELIMITER //-
+
+CREATE PROCEDURE CalculateFine (IN p_Roll_no INT, IN P_NameofBook VARCHAR(100
+
+BEGIN
+
+DECLARE v DateofIssue DATE;
+
+DECLARE v Status CHAR(1);
+
+DECLARE v_DaysOverdue INT;
+
+DECLARE v FineAmount DECIMAL (10, 2);
+Fetch the date of issue and status
+
+SELECT Dateof Issue, Status INTO v DateofIssue, v Status FROM Borrowег
+
+MHERE Rollin p_Roll_no AND NameofBook p Nameof Books
+
+Check if the book is returned
+
+IF v Status THEN
+
+Calculate the number of days overdue
+
+SET v DaysOverdue DATEDIFF(CURDATE(), v_DateofIssue);
+
+Determine the fine amount based on the number of overdue days IF v DaysOverdue BETWEEN 15 AND 30 THEN
+
+SET v FineAmount DaysOverdue 5; ELSEIF v Days Overdue > 30 THEN
+
+SET v FineAmount (105) ((v_DaysOverdue-30)); ELSE
+
+SET v FineAmount END IF;
+
+Update the status of the book to returned
+
+UPDATE Borrower
+
+WHERE Rollin P Roll no AND Naseof Book p_NameofBook;
+
+SET Status A
+
+Insert the fine details into the Fine table if there is a fine IF v FineAmount > THEN INSERT INTO Fine (Roll no, Date, Ant) VALUES (p Roll _no, CURDATE(), v FineAmount);
+
+END IF;
+
+DELIMITER
+
+CALL CalculateFine(1, Mings of fire’);
+
+CALL CalculateFine(2, ‘Pride and Prejudice”);
+
+CALL CalculateFine(3, ‘The lord of Rings”);
+
+CALL CalculateFine(4, 1984);
+
+CALL CalculateFine(5, Lolita’);
+
+CALL CalculateFine (6, A suitable boy’);
+
+CALL CalculateFine(?, ‘war and peace”);
+
+CALL CalculateFine (8, The serchant of Venice”);
+
+SELECT FROM Borrower;
+
+SELECT FROR Fine;

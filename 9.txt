@@ -1,0 +1,124 @@
+Import java.sql.*;
+
+Public class DatabaseOperation {
+
+Private static final String DB_URL = “jdbc:mysql://localhost:3306/college_work”;
+
+Private static final String USER = “root”:
+
+Private static final String PASS= “1234”:
+
+Public static void main(String[] args) throws SQLException {
+
+createTable();
+
+addUser (1, “Aditee Mohanty”, 98);
+
+addUser (2, “Soham Ghodake”, 92); addUser (3, “Prachee Prasad, 90);
+
+addUser (4, “Sanika Bagade”, 83); adduser (5, “Rujuta Bhanose”, 90);
+
+updateMarks (3, 50);
+
+deleteUser(1);
+
+alterTableAddColumn();
+
+alterTableModifyColumn();
+
+alterTableDropColumn();
+
+public static void createTable() throws SQLException { String sql “CREATE TABLE IF NOT EXISTS stud (“ +
+
+“ID INT PRIMARY KEY, +
+
+“name VARCHAR(50), +
+
+“marks INT)”;
+
+Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement();
+
+Stmt.executeUpdate(sql);
+
+System.out.println(“Table ‘stud created successfully.”);
+
+Public static void addUser(int id, String name, int marks) throws SQLException {
+
+String sql = “INSERT INTO stud (ID, name, marks) VALUES (?, ?, ?)”;
+
+Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+PreparedStatement pstmt = conn.prepareStatement(sql);
+
+Pstmt.setInt(1, id);
+
+Pstmt.setString(2, name);
+
+Pstmt.setInt(3, marks);
+
+Pstmt.executeUpdate();
+
+System.out.println(“User with ID+id+ added successfully.”);
+
+}
+
+Public static void updateMarks(int id, int marks) throws SQLException { String sql = “UPDATE stud SET marks? WHERE ID = ?”;
+
+Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+PreparedStatement pstmt = conn.prepareStatement(sql);
+
+Pstmt.setInt(1, marks);
+
+Pstmt.setInt(2, 1d);
+
+Pstmt.executeUpdate();
+
+System.out.println(“Marks updated successfully for ID+1d);
+Public static void deleteUser(int id) throws SQLException {
+
+String sql “DELETE FROM stud WHERE ID = ?”;
+
+Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); PreparedStatement pstmt = conn.prepareStatement(sql);
+
+Pstmt.setInt(1, id);
+
+Pstmt.executeUpdate();
+
+System.out.println(“User with ID” + id + deleted successfully.”);
+
+}
+
+Public static void alter TableAddColumn() throws SQLException { String sql “ALTER TABLE stud ADD COLUMN dept VARCHAR(50)”;
+
+Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement();
+
+Stmt.executeUpdate(sql);
+
+System.out.println(“Column ‘dept’ added successfully.”);
+
+}
+
+Public static void alterTableModifyColumn() throws SQLException {
+
+String sql “ALTER TABLE stud MODIFY COLUMN dept VARCHAR(100)”;
+
+Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement();
+
+Stmt.executeUpdate(sql);
+
+System.out.println(“Column ‘dept’ modified successfully.”);
+
+}
+
+Public static void alter TableDropColumn() throws SQLException {
+
+String sql “ALTER TABLE stud DROP COLUMN dept”;
+
+Connection conn = DriverManager.getConnection(DB_URL, USER, PASS); Statement stmt = conn.createStatement();
+
+Stmt.executeUpdate(sql);
+
+System.out.println(“Column ‘dept’ dropped successfully.”);
+
+}
